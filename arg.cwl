@@ -2,18 +2,19 @@
 
 cwlVersion: v1.0
 class: CommandLineTool
-baseCommand: [tar, --extract]
+label: Example trivial wrapper for Java 9 compiler
+hints:
+  DockerRequirement:
+    dockerPull: openjdk:9.0.1-11-slim
+baseCommand: javac
+arguments: ["-d", $(runtime.outdir)]
 inputs:
-  tarfile:
+  src:
     type: File
-    inputBinding:
-      prefix: --file
-  extractfile:
-    type: string
     inputBinding:
       position: 1
 outputs:
-  extracted_file:
+  classfile:
     type: File
     outputBinding:
-      glob: $(inputs.extractfile)
+      glob: "*.class"
